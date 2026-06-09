@@ -8,11 +8,23 @@ using namespace std;
     Students should fill only the solve function below.
 */
 
-string solve(int n, vector<long long> a) {
+string solve(int n, vector<long long> a){
     // TODO: Fill this function.
     // Return one of: "Player 1" or "Player 2" or "Draw"
 
-    return "";
+    vector<long long> diff(n+1);
+
+    diff[0] = 0;
+    diff[1] = a[n-1];
+
+    for (int i=2;i<=n;i++){
+        diff[i] = max(-diff[i-1]+a[n-i], -diff[i-2]+a[n-i]+a[n-i+1]);
+    }
+    
+    int val = diff[n];
+    if (val==0) return "Draw";
+    else if(val>0) return "Player 1";
+    else return "Player 2";
 }
 
 static string trim(const string &s) {
